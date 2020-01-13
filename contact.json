@@ -1,0 +1,22 @@
+{
+  "title": "Contact Us",
+  "phone": 2310606365,
+  "email": "info@musicstore.gr",
+  "paragraph": "We would love to hear from you!",
+  "departments": [
+    {
+      "name": "Music Store",
+      "coordinates": {
+        "latitude": 40.6292237,
+        "longitude": 22.9521252
+      }
+    } ,
+    {
+      "name": "Vinyl SKG",
+      "coordinates": {
+        "latitude": 40.555225,
+        "longitude": 22.9935787
+      }
+    }
+  ]
+}

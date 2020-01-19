@@ -1,19 +1,28 @@
 const list = (req, res) => {
-    Product.find({}, (err, products) => {
-        res.json(products);
-    });
+    Product.find({})
+        .populate("category")
+        .exec((err, products) =>{
+            res.json(products);
+        });
+
+
 };
 
 const listByCategory = (req, res) => {
-    Product.find({category: req.params.categoryId}, (err, products) => {
-        res.json(products);
-    });
+    Product
+        .find({category: req.params.categoryId})
+        .exec((err, products) => {
+            res.json(products);
+        });
 };
 
 const getOne = (req, res) => {
-    Product.findById(req.params.productId, (err, products) => {
-        res.json(products);
-    });
+    Product
+        .findById(req.params.productId)
+        .populate("category")
+        .exec((err, product) => {
+            res.json(product);
+        });
 };
 
 const create = (req, res) => {

@@ -1,5 +1,6 @@
 const list = async (req, res) => {
-    const products = await Product.find({})
+    const products = await Product
+        .find({})
         .populate("category")
         .exec();
     res.json(products);
@@ -71,13 +72,9 @@ const update = (req, res) => {
     });
 };
 
-const listCart = async (req, res) => {
-    const products = await Product
-        .find({_id:req.body.productIds})
-        .exec();
-    res.json(products);
-
-
+const listCart = async (req,res) => {
+    const products = await Product.find({_id: req.body.productIds}, "title price photo").exec();
+    return res.json(products);
 };
 
 module.exports = {

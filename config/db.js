@@ -1,15 +1,27 @@
 const mongoose = require("mongoose");
+const bcrypt = require("mongoose-bcrypt");
 
 mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
 
-global.User = mongoose.model("User", {
-    firstName: String,
-    lastName: String,
-    email: String
+//User  Model
+const userSchema = mongoose.Schema({
+    firstName: {type:String, required:true},
+    lastName: {type:String, required:true},
+    email: {type:String, required:true, unique:true},
+    password:{
+        type:String,
+        required:true,
+        bcrypt:true
+    }
+
 });
+
+
+userSchema.plugin(bcrypt);
+global.User = mongoose.model("User", userSchema);
 
 global.Product = mongoose.model("Product", {
     category: {

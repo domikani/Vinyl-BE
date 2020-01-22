@@ -10,10 +10,6 @@ const contact = require ('./contact.json')
 require("./config/db");
 
 // Require Controllers
-const UsersController = require("./controllers/UsersController");
-const ProductsController = require("./controllers/ProductsController");
-const CategoriesController = require("./controllers/CategoriesController");
-const DepartmentsController = require("./controllers/DepartmentsController");
 const PhotosController = require("./controllers/PhotosController");
 
 
@@ -25,10 +21,6 @@ app.use(cors());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-// Home Route
-app.get("/", (req, res) => {
-    res.send("OK");
-});
 
 //Gallery?
 app.get("/home",(req,res) =>{
@@ -40,36 +32,17 @@ app.get("/contact",(req,res) =>{
     res.json(contact);
 });
 
-
-// User Routes
-app.get("/users", UsersController.list);
-app.get("/users/:userId", UsersController.getOne);
-app.post("/users", UsersController.create);
-app.delete("/users/:userId", UsersController.deleteUser);
-app.put("/users/:userId", UsersController.update);
+//User
+app.use("/users", require('./routes/admin/users'));
 
 // Product Routes
-app.get("/products", ProductsController.list);
-app.post("/products/cart", ProductsController.listCart);
-app.get("/products/:productId", ProductsController.getOne);
-app.post("/products", ProductsController.create);
-app.delete("/products/:productId", ProductsController.deleteProduct);
-app.put("/products/:productId", ProductsController.update);
-app.get("/products/category/:categoryId", ProductsController.listByCategory);
+app.use("/products", require('./routes/admin/products'));
 
 // Category Routes
-app.get("/categories", CategoriesController.list);
-app.get("/categories/:categoryId", CategoriesController.getOne);
-app.post("/categories", CategoriesController.create);
-app.delete("/categories/:categoryId", CategoriesController.deleteCategory);
-app.put("/categories/:categoryId", CategoriesController.update);
+app.use("/categories", require('./routes/admin/categories'));
 
 //Department Routes
-app.get("/departments", DepartmentsController.list);
-app.get("/departments/:departmentId", DepartmentsController.getOne);
-app.post("/departments", DepartmentsController.create);
-app.delete("/departments/:departmentId", DepartmentsController.deleteDepartment);
-app.put("/departments/:departmentId", DepartmentsController.update);
+app.use("/departments", require('./routes/admin/departments'));
 
 //Photo Routes
 app.get("/photos", PhotosController.list);
@@ -78,4 +51,5 @@ app.post("/photos", PhotosController.create);
 app.delete("/photos/:photoId", PhotosController.deletePhoto);
 app.put("/photos/:photoId", PhotosController.update);
 
-
+//Import Application Routes
+app.use(require('./routes/base'));

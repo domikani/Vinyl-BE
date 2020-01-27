@@ -3,27 +3,23 @@ const login = async (req, res) => {
         .findOne({email: req.body.email})
         .exec();
 
-    //If there is no user with this email //to return stamatei kai den paei parakato
-    if (user === null) {
+    // If there is no user with this email
+    if(user === null) {
         return res.json({
-            message: 'Wrong credentials0'
+            message: "Wrong credentials"
         });
-
     }
 
     if (user.verifyPasswordSync(req.body.password)) {
-        //Success login
+        // Success login
         return res.json(user);
     } else {
-        //login failed
+        // login failed
         return res.json({
-            message: 'Wrong credentials'
+            message: "Wrong credentials"
         });
     }
-
-
 };
-
 
 
 module.exports = {

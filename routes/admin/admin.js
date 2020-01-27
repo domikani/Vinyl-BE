@@ -3,7 +3,7 @@ const route = express.Router();
 
 route.get("/", (req, res) => {
     res.send("Admin Area");
-})
+});
 //User
 route.use("/users", require('./users'));
 

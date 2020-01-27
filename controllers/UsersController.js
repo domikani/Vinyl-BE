@@ -15,15 +15,20 @@ const create = (req, res) => {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
-        password: req.body.password,
+        password: req.body.password
     });
-    u.save()
+    u
+        .save()
         .then(() => {
-        res.json({
-            message: "User created"
+            res.json({
+                message: "User created"
+            });
+        })
+        .catch((err) => {
+            res.json({
+                message: "User Not created"
+            });
         });
-
-    });
 };
 
 const deleteUser = (req, res) => {

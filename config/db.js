@@ -9,33 +9,37 @@ mongoose.connect(process.env.MONGO_URI, {
 
 //User  Model
 const userSchema = mongoose.Schema({
-        firstName: {
-            type: String,
-            required: true
-        },
-        lastName: {
-            type: String,
-            required: true
-        },
-        email: {
-            type: String,
-            required: true,
-            unique: true
-        },
-        password: {
-            type: String,
-            required: true,
-            bcrypt: true
-        }
+    firstName: {
+        type: String,
+        required: true
     },
-    {
-        timestamps: true
+    lastName: {
+        type: String,
+        required: true
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    password: {
+        type: String,
+        required: true,
+        bcrypt: true
+    },
+    role:{
+        type:String,
+        required:true,
+        default:'client',
+        enum:['client','admin','superUser']
+    }
+},
+{
+    timestamps: true
+});
 
-    });
-
-
-global.User = mongoose.model("User", userSchema);
 userSchema.plugin(bcrypt);
+global.User = mongoose.model("User", userSchema);
 
 //Product Model
 

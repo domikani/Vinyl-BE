@@ -1,3 +1,5 @@
+
+
 const list = (req, res) => {
     User.find({}, (err, users) => {
         res.json(users);
@@ -5,12 +7,14 @@ const list = (req, res) => {
 };
 
 const getOne = (req, res) => {
+
     User.findById(req.params.userId, (err, users) => {
         res.json(users);
     });
 };
 
 const create = (req, res) => {
+
     const u = new User({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -26,7 +30,8 @@ const create = (req, res) => {
         })
         .catch((err) => {
             res.json({
-                message: "User Not created"
+                message: "User Not created",
+                error:err
             });
         });
 };

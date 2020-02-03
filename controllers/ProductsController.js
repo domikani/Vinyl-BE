@@ -4,7 +4,10 @@ const list = async (req, res) => {
         .find({})
         .populate("category")
         .exec();
-    res.json(products);
+    res.json({
+        success:true,
+        products: products
+    });
 
 
 };
@@ -13,7 +16,10 @@ const listByCategory = async (req, res) => {
     const products = await Product
         .find({category: req.params.categoryId})
         .exec();
-    res.json(products);
+    res.json({
+        success: true,
+        products: products
+    });
 };
 
 const getOne = async (req, res) => {
@@ -76,6 +82,7 @@ const update = (req, res) => {
         photo: req.body.photo
     }, (err) => {
         res.json({
+            success:true,
             message: "Product Updated"
         });
     });

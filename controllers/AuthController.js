@@ -1,15 +1,15 @@
 const jwt = require('jsonwebtoken');
 
-const adminLogin = async (req,res) =>{
+const adminLogin = async (req, res) => {
     const user = await User
         .findOne({
             email: req.body.email,
-            role:'admin'
+            role: 'admin'
         })
         .exec();
 
     // If there is no user with this email
-    if(user === null) {
+    if (user === null) {
         return res.json({
             message: "Wrong credentials"
         });
@@ -21,28 +21,28 @@ const adminLogin = async (req,res) =>{
         // Success login
         // Create token
         const token = jwt.sign({
-                _id:user._id,
-                firstName:user.firstName,
-                lastName:user.lastName,
-                email:user.email
+                _id: user._id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email
             },
             process.env.JWT_SECRET,
-            {expiresIn:process.env.JWT_EXPIRES_IN}
+            {expiresIn: process.env.JWT_EXPIRES_IN}
         );
         return res.json({
-            success:true,
-            token:token,
-            user:{
-                _id:user._id,
-                firstName:user.firstName,
-                lastName:user.lastName,
-                email:user.email
+            success: true,
+            token: token,
+            user: {
+                _id: user._id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email
             }
         });
     } else {
         // login failed
         return res.json({
-            success:false,
+            success: false,
             message: "Wrong credentials"
         });
     }
@@ -54,7 +54,7 @@ const login = async (req, res) => {
         .exec();
 
     // If there is no user with this email
-    if(user === null) {
+    if (user === null) {
         return res.json({
             message: "Wrong credentials"
         });
@@ -66,28 +66,28 @@ const login = async (req, res) => {
         // Success login
         // Create token
         const token = jwt.sign({
-            _id:user._id,
-            firstName:user.firstName,
-            lastName:user.lastName,
-            email:user.email
-        },
+                _id: user._id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email
+            },
             process.env.JWT_SECRET,
-            {expiresIn:process.env.JWT_EXPIRES_IN}
+            {expiresIn: process.env.JWT_EXPIRES_IN}
         );
         return res.json({
-            success:true,
-            token:token,
-            user:{
-                _id:user._id,
-                firstName:user.firstName,
-                lastName:user.lastName,
-                email:user.email
+            success: true,
+            token: token,
+            user: {
+                _id: user._id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email
             }
         });
     } else {
         // login failed
         return res.json({
-            success:false,
+            success: false,
             message: "Wrong credentials"
         });
     }
@@ -104,22 +104,37 @@ const register = async (req, res) => {
         .save()
         .then(() => {
             res.json({
-                success:true,
+                success: true,
                 message: "User created"
             });
         })
         .catch((err) => {
             res.json({ //prepei na thumamai opou kano respond json na exei success true or false kai na einai se object oposdipote
-                success:false,
+                success: false,
                 message: "User Not created",
 
             });
         });
+
+};
+
+const checkToken = (req, res) => {
+    res.json({
+        success: true,
+        user: {
+            _id:req.user._id,
+            firstName:req.user.firstName,
+            lastName:req.user.lastName,
+            email:req.user.email
+        }
+    });
 };
 
 
 module.exports = {
     login,
     register,
-    adminLogin
+    adminLogin,
+    checkToken
+
 };

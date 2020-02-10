@@ -33,6 +33,8 @@ const AdminAuth = async (req, res, next) => {
             });
 
         }
+
+        req.user = user;
         next();
 
     }

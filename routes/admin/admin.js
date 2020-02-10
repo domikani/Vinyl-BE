@@ -1,6 +1,7 @@
 const express = require('express');
 const route = express.Router();
 const AdminAuth = require('../../middlewares/adminAuth');
+const StatsController = require ("../../controllers/statscontroller");
 
 route.get("/", AdminAuth, (req, res) => {
     res.json({
@@ -9,29 +10,7 @@ route.get("/", AdminAuth, (req, res) => {
     });
 });
 
-route.get("/stats", AdminAuth, async (req, res) => {
-    const categories = await Category.find().exec();
-    const labels = categories.map( c => c.title);
-    const counts = [];
-
-    for (let cat of categories){
-        const num= await Product.count({category:cat._id});
-        counts.push(num);
-    }
-
-    res.json({
-        success: true,
-        data: {
-            labels: labels,
-            datasets: [
-                {
-                    label: 'My categories dataset',
-                    data: counts
-                }
-            ]
-        }
-    });
-});
+route.get("/stats", AdminAuth, StatsController.dashboardStats);
 //User
 route.use("/auth", require('./auth'));
 

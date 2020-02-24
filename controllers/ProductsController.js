@@ -40,7 +40,7 @@ const getOne = async (req, res) => {
 };
 
 const create = async (req, res) => {
-    const u = new Product({
+    const p = new Product({
         category: req.body.category,
         title: req.body.title,
         artist: req.body.artist,
@@ -50,9 +50,9 @@ const create = async (req, res) => {
         description: req.body.description,
         price: req.body.price,
         sale: req.body.sale,
-        photo: req.body.photo
+        photo: req.body.filename,
     });
-    await u.save();
+    await p.save();
     res.json({
         message: "Product created"
     });
@@ -79,7 +79,8 @@ const update = (req, res) => {
         description: req.body.description,
         price: req.body.price,
         sale: req.body.sale,
-        photo: req.body.photo
+        photo: req.body.photo,
+        gallery: req.body.gallery
     }, (err) => {
         res.json({
             success:true,

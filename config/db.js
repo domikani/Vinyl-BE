@@ -9,34 +9,34 @@ mongoose.connect(process.env.MONGO_URI, {
 
 //User  Model
 const userSchema = mongoose.Schema({
-    firstName: {
-        type: String,
-        required: true
+        firstName: {
+            type: String,
+            required: true
+        },
+        lastName: {
+            type: String,
+            required: true
+        },
+        email: {
+            type: String,
+            required: true,
+            unique: true
+        },
+        password: {
+            type: String,
+            required: true,
+            bcrypt: true
+        },
+        role: {
+            type: String,
+            required: true,
+            default: 'client',
+            enum: ['client', 'admin', 'superUser']
+        }
     },
-    lastName: {
-        type: String,
-        required: true
-    },
-    email: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    password: {
-        type: String,
-        required: true,
-        bcrypt: true
-    },
-    role:{
-        type:String,
-        required:true,
-        default:'client',
-        enum:['client','admin','superUser']
-    }
-},
-{
-    timestamps: true
-});
+    {
+        timestamps: true
+    });
 
 userSchema.plugin(bcrypt);
 global.User = mongoose.model("User", userSchema);
@@ -77,8 +77,10 @@ const productSchema = mongoose.Schema({
         },
         photo: {
             type: String,
-            required: true
         },
+        gallery: {
+            type: [String]
+        }
     },
     {
         timestamps: true
@@ -92,7 +94,7 @@ const categorySchema = mongoose.Schema({
         title: {
             type: String,
             required: true,
-            unique:true
+            unique: true
         }
     },
     {
@@ -128,21 +130,21 @@ global.Department = mongoose.model("Department", departmentSchema);
 //Photo model
 
 const photoSchema = mongoose.Schema({
-    url:{
-        type:String,
-        required:true
+    url: {
+        type: String,
+        required: true
     },
-    credits:{
-        type:String,
-        required:true
+    credits: {
+        type: String,
+        required: true
     },
-    title:{
-        type:String
+    title: {
+        type: String
     },
-    sort:{
-        type:String
+    sort: {
+        type: String
     }
-},{
-    timestamps:true
+}, {
+    timestamps: true
 });
-global.Photo = mongoose.model("Photo",photoSchema );
+global.Photo = mongoose.model("Photo", photoSchema);

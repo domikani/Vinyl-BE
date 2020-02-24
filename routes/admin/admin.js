@@ -28,5 +28,18 @@ route.use("/categories", AdminAuth, require('./categories'));
 //Department Routes
 route.use("/departments", AdminAuth, require('./departments'));
 
+route.post("/upload" +
+    "" +
+    "" +
+    "" +
+    "", upload.single('file'), (req, res) => {
+
+    res.json({
+        success: true,
+        message: "File uploaded",
+        filename: req.file.filename
+    });
+});
+
 
 module.exports = route;

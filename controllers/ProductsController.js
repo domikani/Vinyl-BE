@@ -1,15 +1,23 @@
-const mongoose = require ('mongoose');
+const mongoose = require('mongoose');
 const list = async (req, res) => {
     const products = await Product
         .find({})
         .populate("category")
         .exec();
     res.json({
-        success:true,
+        success: true,
         products: products
     });
 
 
+};
+
+const getProducts = async (req, res) => {
+    const product = await Product.findById(req.params.productId).exec();
+    return res.json({
+        success: true,
+        product: product
+    });
 };
 
 const listByCategory = async (req, res) => {
@@ -83,13 +91,13 @@ const update = (req, res) => {
         gallery: req.body.gallery
     }, (err) => {
         res.json({
-            success:true,
+            success: true,
             message: "Product Updated"
         });
     });
 };
 
-const listCart = async (req,res) => {
+const listCart = async (req, res) => {
     const products = await Product.find({_id: req.body.productIds}, "title price photo").exec();
     return res.json(products);
 };
@@ -101,5 +109,6 @@ module.exports = {
     create,
     deleteProduct,
     update,
-    listCart
+    listCart,
+    getProducts
 };

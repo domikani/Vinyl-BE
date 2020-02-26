@@ -7,13 +7,13 @@ const list = async (req, res) => {
 };
 
 const getProductByCategory = async (req, res) => {
-    const category = await Category.findById(req.params.categoryId).exec();
-    const products = await Product.find({category:req.params.categoryId}).exec();
-    return res.json({
-        success: true,
-        category: category,
-        products: products
-    });
+        const category = await Category.findById(req.params.categoryId).exec();
+        const products = await Product.find({category:req.params.categoryId}).exec();
+        return res.json({
+            success: true,
+            category: category,
+            products: products
+        });
 
 
 

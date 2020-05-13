@@ -4,7 +4,7 @@ const list = async (req, res) => {
         .find({})
         .populate("category")
         .exec();
-    res.json({
+    await res.json({
         success: true,
         products: products
     });
